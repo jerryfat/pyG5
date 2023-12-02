@@ -29,7 +29,7 @@ from PySide6.QtWidgets import (
     QMainWindow,
 )
 
-from pyG5.pyG5Network import pyG5NetWorkManager
+from pyG5NetworkMAV import pyG5NetWorkManager # local package file override
 from pyG5.pyG5View import pyG5DualStackFMA, pyG5SecondaryWidget
 
 
@@ -74,8 +74,9 @@ class pyG5App(QApplication):
             logging.basicConfig(level=logging.INFO)
 
         logging.info("{} v{}".format(self.__class__.__name__, __version__))
-
+        print("==Instatiating... network manager object in pyG5Main.py")
         self.networkManager = pyG5NetWorkManager()
+        print("==Instatiated network manager object in pyG5Main.py waiting for data...")
 
         self.paintTimer = QTimer()
         self.paintTimer.timeout.connect(
