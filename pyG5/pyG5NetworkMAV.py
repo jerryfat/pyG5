@@ -303,7 +303,7 @@ class pyG5NetWorkManager(QObject):
 
     @Slot()
     def dataHandler(self): 
-        """dataHandler."""
+        print("\n***** inside pyG5NetworkMAV.dataHandler() *****")
         #print("Response: ", self.udpSock.readAll())
         # timestamp date_time
         now = datetime.now()
@@ -330,11 +330,25 @@ class pyG5NetWorkManager(QObject):
                 idx = 52 # _magHeading #23 old # _magHeading  
                 value = 0
                 try:
-                    val = data_dict["hdg"] # 10.0 to test  #print("inside class pyG5NetWorkManager(QObject): dataHandler() val = data_dict['roll'] =", type(val), " , ", val )
+                    val = data_dict["hdg"] 
+                    #print("\ndronekit val hdg/100",val/100)
                     value = float(val.replace("'","")) #data_dict["'roll'"] #float(datarefs[idx][4])      
-                    #print("after try inside class pyG5NetWorkManager(QObject): dataHandler() value = data_dict['hdg'] =", type(value), " , ", value )
+                    #print("\ndronekit value hdg/100",value/100)
                     retvalues[idx] = (
                         value/100,
+                        self.datarefs[idx][1],
+                        self.datarefs[idx][0],
+                        self.datarefs[idx][5],
+                        )             
+                except:
+                    pass
+                try:
+                    val = data_dict["heading_deg"] 
+                    #print("\nmavsdk val heading_deg", val)
+                    #value = float(val.replace("'","")) #data_dict["'roll'"] #float(datarefs[idx][4])      
+                    #print("\nmavsdk value heading_deg", value) 
+                    retvalues[idx] = (
+                        val,
                         self.datarefs[idx][1],
                         self.datarefs[idx][0],
                         self.datarefs[idx][5],
@@ -352,11 +366,23 @@ class pyG5NetWorkManager(QObject):
                 idx = 53 #24 # _rollAngle
                 value = 0
                 try:
-                    val = data_dict["roll"] # 10.0 to test  #print("inside class pyG5NetWorkManager(QObject): dataHandler() val = data_dict['roll'] =", type(val), " , ", val )
-                    value = float(val.replace("'","")) #data_dict["'roll'"] #float(datarefs[idx][4])
-                    #print("after try inside class pyG5NetWorkManager(QObject): dataHandler() value = data_dict['roll'] =", type(value), " , ", value )
+                    val = data_dict["roll"] 
+                    value = float(val.replace("'","")) 
+                    #print("\ndronekit val roll", value)
                     retvalues[idx] = (
                         value*100,
+                        self.datarefs[idx][1],
+                        self.datarefs[idx][0],
+                        self.datarefs[idx][5],
+                        )
+                except:
+                    pass #bypass
+                try:
+                    val = data_dict["roll_deg"] 
+                    #value = float(val.replace("'","")) #data_dict["'roll'"] #float(datarefs[idx][4])
+                    #print("\nmavsdk val roll_deg", val)
+                    retvalues[idx] = (
+                        val,
                         self.datarefs[idx][1],
                         self.datarefs[idx][0],
                         self.datarefs[idx][5],
@@ -374,11 +400,23 @@ class pyG5NetWorkManager(QObject):
                 idx = 54 #25 # _pitchAngle
                 value = 0
                 try:
-                    val = data_dict["pitch"] # 10.0 to test  #print("inside class pyG5NetWorkManager(QObject): dataHandler() val = data_dict['pitch'] =", type(val), " , ", val )
-                    value = float(val.replace("'","")) #data_dict["'pitch'"] #float(datarefs[idx][4])
-                    #print("after try inside class pyG5NetWorkManager(QObject): dataHandler() value = data_dict['pitch'] =", type(value), " , ", value )
+                    val = data_dict["pitch"] 
+                    value = float(val.replace("'",""))
+                    #print("\ndronekit val pitch", value)
                     retvalues[idx] = (
                         value*100,
+                        self.datarefs[idx][1],
+                        self.datarefs[idx][0],
+                        self.datarefs[idx][5],
+                        )
+                except:
+                    pass #bypass
+                try:
+                    val = data_dict["pitch_deg"] 
+                    #value = float(val.replace("'","")) 
+                    #print("\nmavsdk val pitch_deg", val)
+                    retvalues[idx] = (
+                        val,
                         self.datarefs[idx][1],
                         self.datarefs[idx][0],
                         self.datarefs[idx][5],
@@ -392,16 +430,28 @@ class pyG5NetWorkManager(QObject):
                     except:
                         pass #self.logger.info("error inside class pyG5NetWorkManager(QObject): dataHandler() Error getting data_dict['pitch'] ")
                     #self.logger.info("error inside class pyG5NetWorkManager(QObject): dataHandler() Error getting data_dict['pitch'] ")'''
-                    
-                
+                #    
+                #
                 idx = 58 #29 # _altitude
                 value = 0
                 try:
-                    val = data_dict["alt"] # 10.0 to test  #print("inside class pyG5NetWorkManager(QObject): dataHandler() val = data_dict['roll'] =", type(val), " , ", val )
-                    value = float(val.replace("'","")) #data_dict["'roll'"] #float(datarefs[idx][4])
-                    #print("after try inside class pyG5NetWorkManager(QObject): dataHandler() value = data_dict['alt'] =", type(value), " , ", value )
+                    val = data_dict["alt"] 
+                    #value = float(val.replace("'","")) 
+                    #print("\ndronekit val alt", val)
                     retvalues[idx] = (
-                        value/10,
+                        val/10,
+                        self.datarefs[idx][1],
+                        self.datarefs[idx][0],
+                        self.datarefs[idx][5],
+                        )
+                except:
+                    pass #bypass
+                try:
+                    val = data_dict["absolute_altitude_m"] 
+                    #value = float(val.replace("'","")) 
+                    #print("\nmavsdk val alt", val)
+                    retvalues[idx] = (
+                        val*100,
                         self.datarefs[idx][1],
                         self.datarefs[idx][0],
                         self.datarefs[idx][5],
