@@ -303,7 +303,7 @@ class pyG5NetWorkManager(QObject):
 
     @Slot()
     def dataHandler(self): 
-        print("\n***** inside pyG5NetworkMAV.dataHandler() *****")
+        #print("\n***** inside pyG5NetworkMAV.dataHandler() *****")
         #print("Response: ", self.udpSock.readAll())
         # timestamp date_time
         now = datetime.now()
@@ -317,7 +317,7 @@ class pyG5NetWorkManager(QObject):
             if (len(data.data()) < 5):
                 return
             data_dict = pickle.loads(data.data())
-            print("\rdatahandler()Rcvd: len:", len(data.data())," ", data_dict, end="") #print(".",) ("\rComplete: ", i, "%", end="")
+            #print("\rdatahandler()Rcvd: len:", len(data.data())) #," ", data_dict, end="") #print(".",) ("\rComplete: ", i, "%", end="")
             # if data_dict has entries then emit log message
             mesg = date_time + "Received data_dict= " + str(data_dict)
             #self.logger.info(mesg)   #for k, v in data_dict.items(): print(k, v)
