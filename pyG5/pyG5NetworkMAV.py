@@ -434,8 +434,8 @@ class pyG5NetWorkManager(QObject):
                 #
                 idx = 58 #29 # _altitude
                 value = 0
-                try:
-                    val = data_dict["alt"] 
+                try: # DRONEKIT SITL or ARDDUPILOT
+                    val = data_dict["alt"]*3.28084 # convert to feet # self.data_dict["relative_altitude_m"]*3.28084
                     #value = float(val.replace("'","")) 
                     #print("\ndronekit val alt", val)
                     retvalues[idx] = (
@@ -446,12 +446,12 @@ class pyG5NetWorkManager(QObject):
                         )
                 except:
                     pass #bypass
-                try:
-                    val = data_dict["absolute_altitude_m"] 
+                try:  # MAVSDK PX4
+                    val = data_dict["relative_altitude_m"]*3.28084   # old ["absolute_altitude_m"]
                     #value = float(val.replace("'","")) 
                     #print("\nmavsdk val alt", val)
                     retvalues[idx] = (
-                        val*100,
+                        val,
                         self.datarefs[idx][1],
                         self.datarefs[idx][0],
                         self.datarefs[idx][5],
